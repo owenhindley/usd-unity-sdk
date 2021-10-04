@@ -598,35 +598,48 @@ namespace Unity.Formats.USD
             {
                 if (mat == null) mat = options.materialMap.InstantiateSolidColor(Color.white);
 
-                if (unityMesh.subMeshCount == 1)
+                if (options.materialImportMode == MaterialImportMode.ImportDisplayColor)
                 {
-                    renderer.sharedMaterial = mat;
-                    if (options.ShouldBindMaterials)
-                        options.materialMap.RequestBinding(
-                            path,
-                            (scene, boundMat, primvars) => BindMat(
-                                scene, unityMesh, boundMat, renderer, path, primvars, usdMesh));
+                    if (usdMesh.uv != null)
+                    {
+                        ImportUv(unityMesh, 0, usdMesh.uv);
+                    }
+
                 }
                 else
                 {
-                    var mats = new Material[unityMesh.subMeshCount];
-                    for (var i = 0; i < mats.Length; i++) mats[i] = mat;
-                    renderer.sharedMaterials = mats;
-                    if (options.ShouldBindMaterials)
+                    if (unityMesh.subMeshCount == 1)
                     {
-                        Debug.Assert(geomSubsets.Subsets.Count == unityMesh.subMeshCount);
-                        var subIndex = 0;
-                        foreach (var kvp in geomSubsets.Subsets)
-                        {
-                            var idx = subIndex++;
+                        renderer.sharedMaterial = mat;
+                        if (options.ShouldBindMaterials)
                             options.materialMap.RequestBinding(
-                                kvp.Key,
+                                path,
                                 (scene, boundMat, primvars) => BindMat(
-                                    scene, unityMesh, boundMat, renderer, idx, path, primvars,
-                                    usdMesh));
+                                    scene, unityMesh, boundMat, renderer, path, primvars, usdMesh));
+                    }
+                    else
+                    {
+                        var mats = new Material[unityMesh.subMeshCount];
+                        for (var i = 0; i < mats.Length; i++) mats[i] = mat;
+                        renderer.sharedMaterials = mats;
+                        if (options.ShouldBindMaterials)
+                        {
+                            Debug.Assert(geomSubsets.Subsets.Count == unityMesh.subMeshCount);
+                            var subIndex = 0;
+                            foreach (var kvp in geomSubsets.Subsets)
+                            {
+                                var idx = subIndex++;
+                                options.materialMap.RequestBinding(
+                                    kvp.Key,
+                                    (scene, boundMat, primvars) => BindMat(
+                                        scene, unityMesh, boundMat, renderer, idx, path, primvars,
+                                        usdMesh));
+                            }
                         }
                     }
                 }
+
+
             }
 
             Profiler.EndSample();
