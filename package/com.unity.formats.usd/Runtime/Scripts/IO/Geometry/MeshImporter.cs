@@ -600,10 +600,10 @@ namespace Unity.Formats.USD
 
                 if (options.materialImportMode == MaterialImportMode.ImportDisplayColor)
                 {
-                    if (usdMesh.uv != null)
-                    {
-                        ImportUv(unityMesh, 0, usdMesh.uv);
-                    }
+                    if (usdMesh.uv != null) ImportUv(unityMesh, 0, usdMesh.uv);
+                    if (usdMesh.uv2 != null) ImportUv(unityMesh, 1, usdMesh.uv2);
+                    if (usdMesh.uv3 != null) ImportUv(unityMesh, 2, usdMesh.uv3);
+                    if (usdMesh.uv4 != null) ImportUv(unityMesh, 3, usdMesh.uv4);
 
                 }
                 else
