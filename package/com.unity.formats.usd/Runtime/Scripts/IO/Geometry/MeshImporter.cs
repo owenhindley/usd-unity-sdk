@@ -789,6 +789,11 @@ namespace Unity.Formats.USD
             var uv3 = TryGetPrimvarValue<Vector3>(uv);
             if (uv3 != null)
             {
+                if (uv3.Length != unityMesh.vertices.Length)
+                {
+                    Debug.LogWarning($"Warning, UV/vertex count mismatch, uvs: {uv3.Length}, verts: {unityMesh.vertices.Length}");
+                }
+
                 if (uv3.Length > 0) unityMesh.SetUVs(uvSetIndex, uv3);
                 return;
             }
