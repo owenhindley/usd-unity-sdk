@@ -782,6 +782,7 @@ namespace Unity.Formats.USD
             var uv2 = TryGetPrimvarValue<Vector2>(uv);
             if (uv2 != null)
             {
+                Debug.Log($"Attempting to set UVs of length {uv2.Length} on mesh {unityMesh.name} length {unityMesh.vertexCount}");
                 if (uv2.Length > 0) unityMesh.SetUVs(uvSetIndex, uv2);
                 return;
             }
@@ -789,6 +790,7 @@ namespace Unity.Formats.USD
             var uv3 = TryGetPrimvarValue<Vector3>(uv);
             if (uv3 != null)
             {
+                Debug.Log($"Attempting to set UVs of length {uv3.Length} on mesh {unityMesh.name} length {unityMesh.vertexCount}");
                 if (uv3.Length > 0) unityMesh.SetUVs(uvSetIndex, uv3);
                 return;
             }
@@ -796,6 +798,7 @@ namespace Unity.Formats.USD
             var uv4 = TryGetPrimvarValue<Vector4>(uv);
             if (uv4 != null)
             {
+                Debug.Log($"Attempting to set UVs of length {uv4.Length} on mesh {unityMesh.name} length {unityMesh.vertexCount}");
                 if (uv4.Length > 0) unityMesh.SetUVs(uvSetIndex, uv4);
                 return;
             }
