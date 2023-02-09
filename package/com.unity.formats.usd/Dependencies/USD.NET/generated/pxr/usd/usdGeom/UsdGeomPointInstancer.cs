@@ -8,6 +8,8 @@
 // the SWIG interface file instead.
 //------------------------------------------------------------------------------
 
+using UnityEngine;
+
 namespace pxr
 {
     public class UsdGeomPointInstancer : UsdGeomBoundable
@@ -429,6 +431,11 @@ namespace pxr
 
         public bool ComputeInstanceTransformsAtTime(VtMatrix4dArray xforms, UsdTimeCode time, UsdTimeCode baseTime)
         {
+            Debug.LogWarning("SETTING TIMECODE TO DEFAULT");
+
+            time = UsdTimeCode.Default();
+            baseTime = UsdTimeCode.Default();
+
             bool ret = UsdCsPINVOKE.UsdGeomPointInstancer_ComputeInstanceTransformsAtTime__SWIG_2(swigCPtr, VtMatrix4dArray.getCPtr(xforms), UsdTimeCode.getCPtr(time), UsdTimeCode.getCPtr(baseTime));
             if (UsdCsPINVOKE.SWIGPendingException.Pending) throw UsdCsPINVOKE.SWIGPendingException.Retrieve();
             return ret;
